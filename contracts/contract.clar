@@ -1,69 +1,28 @@
-;; Simple Health Tracker Contract
-;; A basic health data tracking system on Stacks blockchain
+simple-health-tracker.clar
+;; Simple Health Tracker
+;; Users can log and view their health records
 
-;; Constants
-(define-constant contract-owner tx-sender)
-(define-constant err-owner-only (err u100))
-(define-constant err-not-authorized (err u101))
-(define-constant err-invalid-data (err u102))
-(define-constant err-user-not-found (err u103))
+(define-map health-logs
+  principal
+  { date: (string-ascii 10), notes: (string-ascii 100) })
 
-;; Data structures
-(define-map health-records 
-  principal 
-  {
-    weight: uint,
-    height: uint,
-    steps: uint,
-    last-updated: uint
-  })
+(define-map has-logged
+  principal
+  bool)
 
-(define-map user-permissions principal bool)
-(define-data-var total-users uint u0)
+(define-constant err-already-logged (err u100))
+(define-constant err-no-log-found (err u101))
 
-;; Function 1: Record Health Data
-;; Allows users to record their health metrics
-(define-public (record-health-data (weight uint) (height uint) (steps uint))
+;; Log health status for the day (only once per user)
+(define-public (log-health (date (string-ascii 10)) (notes (string-ascii 100)))
   (begin
-    ;; Validate input data
-    (asserts! (and (> weight u0) (> height u0)) err-invalid-data)
-    (asserts! (<= steps u100000) err-invalid-data) ;; reasonable daily step limit
-    
-    ;; Check if user exists, if not increment total users
-    (let ((existing-record (map-get? health-records tx-sender)))
-      (if (is-none existing-record)
-        (var-set total-users (+ (var-get total-users) u1))
-        true))
-    
-    ;; Store health record
-    (map-set health-records tx-sender {
-      weight: weight,
-      height: height, 
-      steps: steps,
-      last-updated: block-height
-    })
-    
-    ;; Grant user permission to access their data
-    (map-set user-permissions tx-sender true)
-    
+    (asserts! (is-none (map-get? has-logged tx-sender)) err-already-logged)
+    (map-set health-logs tx-sender { date: date, notes: notes })
+    (map-set has-logged tx-sender true)
     (ok true)))
 
-;; Function 2: Get Health Summary
-;; Retrieves health data for a specific user
-(define-read-only (get-health-summary (user principal))
-  (let ((record (map-get? health-records user)))
-    (match record
-      health-data (ok health-data)
-      (err err-user-not-found))))
-
-;; Helper function: Get user's own health data
-(define-read-only (get-my-health-data)
-  (get-health-summary tx-sender))
-
-;; Get total registered users
-(define-read-only (get-total-users)
-  (ok (var-get total-users)))
-
-;; Check if user has recorded health data
-(define-read-only (has-health-record (user principal))
-  (ok (is-some (map-get? health-records user))))
+;; View own health log
+(define-read-only (get-my-log)
+  (match (map-get? health-logs tx-sender)
+    log (ok log)
+    err-no-log-found))
