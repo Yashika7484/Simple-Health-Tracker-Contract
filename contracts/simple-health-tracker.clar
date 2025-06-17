@@ -1,4 +1,4 @@
-simple-health-tracker.clar
+
 ;; Simple Health Tracker
 ;; Users can log and view their health records
 
