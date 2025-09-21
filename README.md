@@ -17,7 +17,7 @@ Our vision is to revolutionize personal health data management by leveraging blo
 - **Global Accessibility**: Provide health tracking tools accessible to anyone with internet access
 - **Interoperability**: Build foundations for health data sharing across different healthcare providers and systems
 
-## Future Scope
+## Future Scope - 
 
 ### Phase 1 - Enhanced Metrics
 - Add support for additional health metrics (blood pressure, heart rate, BMI calculation)
@@ -61,7 +61,7 @@ Our vision is to revolutionize personal health data management by leveraging blo
 - `get-total-users()` - Get total number of registered users
 - `has-health-record(user)` - Check if a user has recorded health data
 
-### Deployment Instructions
+### Deployment Instructions :
 
 1. Install Clarinet: `npm install -g @hirosystems/clarinet-cli`
 2. Clone the repository
@@ -69,7 +69,7 @@ Our vision is to revolutionize personal health data management by leveraging blo
 4. Deploy to testnet: `clarinet deployments apply --devnet`
 5. Test functions using Clarinet console
 
-### Usage Example
+### Usage Example:
 
 ```clarity
 ;; Record health data
@@ -79,7 +79,7 @@ Our vision is to revolutionize personal health data management by leveraging blo
 (contract-call? .simple-health-tracker get-my-health-data)
 ```
 
-### Contributing
+### Contributing:
 
 We welcome contributions! Please feel free to submit issues, feature requests, or pull requests to help improve the Simple Health Tracker.
 
