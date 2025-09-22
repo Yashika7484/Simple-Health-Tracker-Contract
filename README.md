@@ -45,12 +45,12 @@ Our vision is to revolutionize personal health data management by leveraging blo
 - Insurance integration for wellness programs
 - Research data contribution (with user consent)
 
-## Contract Address
+## Contract Address-
 
 **Testnet Contract Address**: 
 `STGPBEW1DRVNA80A863AYGPGNJ91SYNBYKTZK0QB.simple-health-tracker`
 
-### Contract Functions
+### Contract Functions-
 
 #### Public Functions:
 - `record-health-data(weight, height, steps)` - Record personal health metrics
@@ -83,7 +83,7 @@ Our vision is to revolutionize personal health data management by leveraging blo
 
 We welcome contributions! Please feel free to submit issues, feature requests, or pull requests to help improve the Simple Health Tracker.
 
-### License
+### License:
 
 This project is licensed under the MIT License - see the LICENSE file for details.# Simple-Health-Tracker-Contract
 <img width="1422" alt="screenshot (2)" src="https://github.com/user-attachments/assets/720fa808-2c1c-47c1-b350-1ab05e7a4816" />
